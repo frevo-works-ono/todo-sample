@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+    <meta charset="utf-8" />
+    <title>client</title>
+  </head>
+  <body>
+    ようこそ、<span sec:authentication="principal.userName"></span>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
+</html>

@@ -45,4 +45,8 @@ public class User implements Serializable {
   @OneToMany
   private List<Todo> todoList;
 
+  public User(Integer id) {
+    this.id = id;
+  }
+
 }

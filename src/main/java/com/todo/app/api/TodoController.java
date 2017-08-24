@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.todo.app.response.TodoResponse;
 import com.todo.domain.dto.LoginUser;
 import com.todo.domain.model.Todo;
+import com.todo.domain.model.User;
 import com.todo.domain.service.TodoService;
 
 @RestController
@@ -37,7 +39,10 @@ public class TodoController {
 
   @RequestMapping(method = RequestMethod.POST)
   @ResponseStatus(HttpStatus.CREATED)
-  public TodoResponse post(@Validated @RequestBody Todo request) {
+  public TodoResponse post(@AuthenticationPrincipal LoginUser loginUser, @RequestHeader("X-TOKEN") String value,
+      @Validated @RequestBody Todo request) {
+
+    request.setUser(new User(loginUser.getUserId()));
 
     Todo todo = todoService.save(request);
 

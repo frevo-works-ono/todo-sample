@@ -28,11 +28,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     // RequestMatcher csrfRequestMatcher = new RequestMatcher() {
     // // CSRF対象外URL:
     // private AntPathRequestMatcher[] requestMatchers = { new
-    // AntPathRequestMatcher("/users"),
-    // new AntPathRequestMatcher("/teams"), new
-    // AntPathRequestMatcher("/events"),
-    // new AntPathRequestMatcher("/events/**"), new
-    // AntPathRequestMatcher("/callback") };
+    // AntPathRequestMatcher("/api/**") };
     //
     // @Override
     // public boolean matches(HttpServletRequest request) {
@@ -59,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .defaultSuccessUrl("/home") // 認証成功時の遷移先
         .usernameParameter("mailAddress").passwordParameter("password") // ユーザー名、パスワードのパラメータ名
         // .and().csrf().requireCsrfProtectionMatcher(csrfRequestMatcher)
-        .and();
+        .and().csrf().disable(); // CSRF無効
 
     // ログアウト設定
     http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout**")) // ログアウト処理のパス

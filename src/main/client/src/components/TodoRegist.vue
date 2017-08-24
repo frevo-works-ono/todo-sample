@@ -1,11 +1,9 @@
 <template>
   <div class="hello">
-    <meta name="_csrf" th:content="${_csrf.token}"/>
-    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <form v-on:submit.prevent="onSubmit" class="col s12">
       <div class="row">
         <div class="input-field col s6">
-          <input type="text" v-model="content" id="content" class="validate">
+          <input type="text" v-model="todo.content" id="content" class="validate">
           <label for="content">タスク内容</label>
         </div>
         
@@ -18,30 +16,32 @@
 </template>
 
 <script>
-import axios from 'axios'
-
 export default {
   name: 'TodoRegist',
-  created: function () {
-    
-  },
   methods: {
     onSubmit: function () {
-      axios.post('/api/todo', {
-        content: this.content
-      })
-      .then(function (res) {
-        console.log('登録完了')
-        this.$router.go(-1)
-      })
-      .catch(function (error) {
-        console.log(error)
+      $.ajax({
+        url: '/api/todo',
+        type: 'POST',
+        contentType: 'application/json',
+        headers: {
+          'X-TOKEN': 'aaaa'
+        },
+        dataType: 'json',
+        data: JSON.stringify(this.todo)
+      }).done(function () {
+        this.$route.go(-1)
+      }).fail(function () {
+
       })
     }
   },
   data () {
     return {
-      content: ''
+      todo: {
+        content: '',
+        status: ''
+      }
     }
   }
 }
